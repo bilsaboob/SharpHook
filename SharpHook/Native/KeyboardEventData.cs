@@ -33,6 +33,11 @@ public struct KeyboardEventData : IEquatable<KeyboardEventData>
     public char KeyChar;
 
     /// <summary>
+    /// The raw key event flags.
+    /// </summary>
+    public ushort Flags;
+
+    /// <summary>
     /// Compares this object to another object for equality.
     /// </summary>
     /// <param name="obj">The object to compare</param>
@@ -67,7 +72,8 @@ public struct KeyboardEventData : IEquatable<KeyboardEventData>
     /// <returns>The string representation of this object.</returns>
     public override string ToString() =>
         $"{nameof(KeyboardEventData)}: {nameof(this.KeyCode)} = {this.KeyCode}; " +
-        $"{nameof(this.RawCode)} = {this.RawCode}; {nameof(this.KeyChar)} = {this.KeyChar}";
+        $"{nameof(this.RawCode)} = {this.RawCode}; {nameof(this.KeyChar)} = {this.KeyChar}; {nameof(this.Flags)} = {this.Flags}" +
+        $"{(this.IsInjectedEvent() ? "; Injected" : "; Normal")}";
 
     /// <summary>
     /// Compares two objects for equality.
@@ -90,4 +96,13 @@ public struct KeyboardEventData : IEquatable<KeyboardEventData>
     /// </returns>
     public static bool operator !=(KeyboardEventData left, KeyboardEventData right) =>
         !(left == right);
+}
+
+public static class KeyboardEventDataExtensions
+{
+    private const int LLKHF_INJECTED = 0x00000010;
+
+    public static bool IsInjectedEvent(this KeyboardEventData data) {
+        return (data.Flags & LLKHF_INJECTED) != 0;
+    }
 }
