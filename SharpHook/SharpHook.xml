@@ -920,6 +920,11 @@
             <value>The character of the key.</value>
             <remarks>This field is available only for the <see cref="F:SharpHook.Native.EventType.KeyTyped" /> event.</remarks>
         </member>
+        <member name="F:SharpHook.Native.KeyboardEventData.Flags">
+            <summary>
+            The raw key event flags.
+            </summary>
+        </member>
         <member name="M:SharpHook.Native.KeyboardEventData.Equals(System.Object)">
             <summary>
             Compares this object to another object for equality.
